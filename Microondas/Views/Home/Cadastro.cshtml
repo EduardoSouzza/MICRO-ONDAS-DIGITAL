@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Cadastrar";
+}
+
+@using Microondas.App.Models
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Cadastro de novos programas</h2>
+        <div class="alert alert-success">
+            <strong>Successo!</strong> Cadastro realizado.
+        </div>
+        <div class="alert alert-danger">
+            <strong>Cuidado!</strong> Tempo máximo 2 minutos
+        </div>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-6">
+        <form class="form-cadastro">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" name="nome" id="nome" placeholder="nome" maxlength="20" required>
+            </div>
+            <div class="form-group">
+                <label for="instrucoes">Instruções</label>
+                <input type="text" class="form-control" name="instrucao" id="instrucoes" placeholder="instruções" maxlength="60" required>
+            </div>
+            <div class="form-group">
+                <label for="tempo">Tempo</label>
+                <input type="time" class="form-control txtTempo" name="tempo" placeholder="Tempo" min="00:01" max="02:00" value="02:00" required>
+            </div>
+            <div class="form-group">
+                <label for="potencia">Potência</label>
+                <input type="number" class="form-control" id="txtPotencia" name="potencia" placeholder="Potência" min="1" max="10" value="10" required>
+            </div>
+            <div class="form-group">
+                <label for="caracter">Carácter</label>
+                <input type="text" class="form-control caracter" name="caracter" placeholder="Carácter" maxlength="1" required>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" onclick="Salvar(event)">Salvar</button>
+        </form>
+    </div>
+</div>        

@@ -1,0 +1,6 @@
+﻿Padrão|02:00|10|.|Aquecimento com potência máxima, tome cuidado!
+Aquecer|00:30|8|*|Aquece o alimento na potência media/alta
+Pipoca|01:30|5|,|Verifique na embalagem o lado certo.
+Macarrão|01:45|6|;|Cozinhe o macarrão com muita água, mas ao final tome cuidado.
+Arroz|01:20|5|!|Cozinhe o arroz e ao terminar deixe descançar por 5 minutos
+Descongelar|01:00|10|!|Utilize essa opção para descongelar legumes/carnes

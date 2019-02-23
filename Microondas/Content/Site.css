@@ -1,0 +1,99 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+    for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+.input-escolha {
+    width: 50%;
+}
+
+.box {
+    position: relative;
+}
+
+.box-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+    .box-btn > input {
+        margin: 5px;
+    }
+
+.personalizado {
+    display: none;
+}
+
+.box-personalizado {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+}
+
+.configuracao > p {
+    margin: 10px 0 0 0;
+}
+
+.size {
+    float: left;
+    width: 65px;
+}
+
+.mt-5 {
+    margin-top: 1rem;
+}
+
+.mt-10 {
+    margin-top: 2rem;
+}
+
+.mt-15 {
+    margin-top: 3rem;
+}
+
+.alert-success, .alert-danger {
+    display: none;
+}
+
+.txCaracter {
+    word-break: break-all;
+}
+
+
+input[type="time"]::-webkit-clear-button {
+    display: none;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}

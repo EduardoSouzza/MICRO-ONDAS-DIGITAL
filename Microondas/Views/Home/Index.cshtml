@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using Microondas.App.Models
+
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Painel</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 input-escolha">
+        <select class="form-control single-select" id="tipoPrograma" name="Programa" onchange="menuEscolha()">
+            <option value="0">Manualmente</option>
+            <option value="1">Programa</option>
+        </select>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="box">
+            <div class="configuracao">
+                <div class="mt-5">
+                    <div class="size">Tempo:</div>
+                    <input type="time" class="txtTempo" placeholder="Tempo" min="00:01" max="02:00" value="02:00">
+                </div>
+                <br />
+                <div class="mt-5">
+                    <div class="size">Potência:</div>
+                    <input type="number" class="txtPotencia" placeholder="Potência" min="1" max="10" value="10">
+                </div>
+            </div>
+            <div class="box-personalizado personalizado">
+                <select class="form-control single-select" name="cbPrograma" id="cbPrograma" onchange="menuPrograma()">
+                    @{ int i = 0;}
+                    @foreach (var prg in LerArquivos.ListarProgramas)
+                    {
+                        <option value=@i>@prg.Nome</option>
+                        i++;
+                    }
+                </select>
+            </div>
+            <div id="contenedor" class="text-right">
+                <h1 class="reloj tempo">00:00</h1>
+            </div>
+        </div>
+        <div class="box-btn mt-15">
+            <input type="button" class="btn btn-primary" id="btIniciar" value="Iniciar" onclick="Iniciar()">
+            <input type="button" class="btn btn-primary" id="btParar" value="Pausar" onclick="Pausar();">
+            <input type="button" class="btn btn-primary" id="btCancelar" value="Parar" onclick="Parar();">
+            <input type="button" class="btn btn-primary" id="btAquecimento" value="Aquecimento Rápido" onclick="AquecimentoRapido();">
+        </div>
+    </div>
+    <div class="col-md-6 personalizado">
+        <div class="box">
+            <span class="text-uppercase">Instruções</span>
+            <h4 class="txInstrucao"></h4>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <div class="mt-10">
+            <h4 class="txStringAquecendo">String aquecendo</h4>
+            <div class="txCaracter">#</div>
+        </div>
+    </div>
+</div>
