@@ -19,6 +19,24 @@ function Iniciar() {
                 $(".txStringAquecendo").html("String aquecendo");
                 var texto = $(".txtTempo").val();
                 var tempo = getTime(texto);
+
+                //verifica se é valido
+                if (tempo > 120) {
+                    started = false;
+                    $("#cuidado").html("<strong>Cuidado!</strong> Tempo máximo 2 minutos").show();
+                    return;
+                }
+
+                //verifica se é valido
+                var potencia = +$(".txtPotencia").val();
+                if (potencia > 10 || potencia < 1) {
+                    started = false;
+                    $("#cuidado").html("<strong>Cuidado!</strong> Ajuste a potência entre 1 e 10").show();
+                    return;
+                }
+
+                //se não esconde e inicia normalmente
+                $("#cuidado").hide();
                 iniciarCronometro(tempo);
                 aquecendo();
             }
@@ -139,7 +157,7 @@ function aquecendo() {
 function Salvar(e) {
     e.preventDefault();
     var formData = $(".form-cadastro").serializeArray();
-    $(".alert-success, .alert-danger").hide();
+    $("#alertSucesso, #alertDanger").hide();
 
     if (formData) {
         var data = {};
@@ -151,19 +169,19 @@ function Salvar(e) {
         nome: ""
 
         if (data['caracter'] === "" || data['instrucao'] === "" || data['nome'] === "") {
-            $(".alert-danger").html("<strong>Cuidado!</strong> Preencha todos campos").show();
+            $("#alertDanger").html("<strong>Cuidado!</strong> Preencha todos campos").show();
             return;
         }
 
         var tempo = getTime(data["tempo"]);
         if (tempo > 120) {
-            $(".alert-danger").html("<strong>Cuidado!</strong> Tempo máximo 2 minutos").show();
+            $("#alertDanger").html("<strong>Cuidado!</strong> Tempo máximo 2 minutos").show();
             return;
         }
 
         var potencia = +data["potencia"];
         if (potencia > 10 || potencia < 1) {
-            $(".alert-danger").html("<strong>Cuidado!</strong> Ajuste a potência entre 1 e 10").show();
+            $("#alertDanger").html("<strong>Cuidado!</strong> Ajuste a potência entre 1 e 10").show();
             return;
         }
 
@@ -174,7 +192,7 @@ function Salvar(e) {
             dataType: "json",
             success: function (data) {
                 if (data.result) {
-                    $(".alert-success").show();
+                    $("#alertSucesso").show();
                 }
             },
             error: function (err) {
