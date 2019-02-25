@@ -1,4 +1,6 @@
-﻿@{
+﻿@model  Microondas.App.Models.Programa
+
+@{
     ViewData["Title"] = "Cadastrar";
 }
 
@@ -17,7 +19,8 @@
 </div>
 <div class="row mt-5">
     <div class="col-md-6">
-        <form class="form-cadastro">
+        @using (Html.BeginForm())
+        {
             <div class="form-group">
                 <label for="nome">Nome</label>
                 <input type="text" class="form-control" name="nome" id="nome" placeholder="nome" maxlength="20" required>
@@ -38,7 +41,7 @@
                 <label for="caracter">Carácter</label>
                 <input type="text" class="form-control caracter" name="caracter" placeholder="Carácter" maxlength="1" required>
             </div>
-            <button type="submit" class="btn btn-primary pull-right" onclick="Salvar(event)">Salvar</button>
-        </form>
+            <button type="submit" class="btn btn-primary pull-right">Salvar</button>
+        }
     </div>
 </div>        

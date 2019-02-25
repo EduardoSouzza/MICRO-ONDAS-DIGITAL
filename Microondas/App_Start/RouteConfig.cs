@@ -18,6 +18,12 @@ namespace Microondas
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+               name: "Cadastrar",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Cadastro", action = "Index", id = UrlParameter.Optional }
+           );
         }
 
     }

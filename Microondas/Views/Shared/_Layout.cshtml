@@ -23,7 +23,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Início", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Novo", "Cadastro", "Home")</li>
+                    <li>@Html.ActionLink("Novo", "Index", "Cadastro")</li>
                 </ul>
             </div>
         </div>
@@ -36,11 +36,12 @@
         <hr />
         <footer></footer>
     </div>
-
-    <script type="text/javascript" src="~/Scripts/controlador.js"></script>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript" src="~/Scripts/controlador.js"></script>
+    <script type="text/javascript" src="~/Scripts/cadastro.js"></script>
+
 </body>
 </html>
