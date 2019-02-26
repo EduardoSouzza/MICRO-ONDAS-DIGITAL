@@ -7,11 +7,20 @@ namespace Microondas.App.Models
 {
     public class Programa
     {
+        public string nome { get; set; }
+        public string instrucao { get; set; }
+        public string tempo { get; set; }
+        public string potencia { get; set; }
+        public string caracter { get; set; }
+        public bool started { get; set; }
+        public bool paused { get; set; }
+        public bool finshed { get; set; }
 
-        public String nome { get; set; }
-        public String instrucao { get; set; }
-        public String tempo { get; set; }
-        public String potencia { get; set; }
-        public String caracter { get; set; }
+        public string convertTimer(string texto)
+        {
+            var strMinutos = int.Parse(texto.Substring(0, texto.IndexOf(":")));
+            var strSegundos = int.Parse(texto.Substring(texto.IndexOf(":") + 1));
+            return ((strMinutos * 60) + strSegundos).ToString();
+        }
     }
 }

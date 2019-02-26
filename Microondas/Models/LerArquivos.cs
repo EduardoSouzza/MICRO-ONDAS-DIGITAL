@@ -15,7 +15,6 @@ namespace Microondas.App.Models
             {
                 var Linhas = new List<ProgramaMicroondas>();
 
-                //var enderecoDoArquivo = "configuracao.txt";
                 var enderecoDoArquivo = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "configuracao.txt");
                 using (var fluxoDoArquivo = new FileStream(enderecoDoArquivo, FileMode.Open))
                 using (var leitor = new StreamReader(fluxoDoArquivo))
@@ -32,6 +31,19 @@ namespace Microondas.App.Models
             }
         }
 
+        public static Programa GetProgramaByName(String nome)
+        {
+            var data = ListarProgramas.FirstOrDefault(programa => programa.Nome.Equals(nome));
+            return new Programa()
+            {
+                nome = data.Nome,
+                instrucao = data.Instrucao,
+                caracter = data.Caracter,
+                potencia = data.Potencia.ToString(),
+                tempo = data.Tempo
+            };
+        }
+
         static ProgramaMicroondas FormatLine(string linha)
         {
             var campos = linha.Split('|');
@@ -41,8 +53,7 @@ namespace Microondas.App.Models
             var caracter = campos[3];
             var instrucao = campos[4];
 
-            var resultado = new ProgramaMicroondas(nome, tempo, potencia, caracter, instrucao);
-            return resultado;
+            return new ProgramaMicroondas(nome, tempo, potencia, caracter, instrucao); ;
         }
     }
 }
