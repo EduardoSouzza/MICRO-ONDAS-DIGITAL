@@ -25,14 +25,24 @@ namespace Microondas.App.Controllers
         [HttpPost]
         public ActionResult Parar()
         {
-            main = new Programa()
+
+
+            //se eu parar, preciso devolver o mesmo programa zerado
+            main = LerArquivos.GetProgramaByName(main.nome);
+
+            //se existir, converto o tempo para o ideal
+            if (main != null)
+                main.tempo = main.convertTimer(main.tempo);
+            else
             {
-                nome = "Aquecimento Rápido",
-                instrucao = "Aquecimento com potência máxima, tome cuidado!",
-                tempo = "120",
-                potencia = "10",
-                caracter = "."
-            };
+                main = new Programa()
+                {
+                    nome = "ProgramaPadrao",
+                    tempo = "120",
+                    potencia = "10",
+                    caracter = "#"
+                };
+            }
 
             return new JsonResult()
             {
@@ -53,16 +63,32 @@ namespace Microondas.App.Controllers
             };
         }
 
-
         [HttpPost]
         public ActionResult IniciarPrograma(String nome)
         {
-            main = LerArquivos.GetProgramaByName(nome);
-            main.tempo = main.convertTimer(main.tempo);
 
+            if (main == null)
+            {
+                main = LerArquivos.GetProgramaByName(nome);
+                main.tempo = main.convertTimer(main.tempo);
+                return this.Cozinhar(main);
+            }
+
+            //verifica se  é o mesmo programa
+            if (main.paused && main.nome != null && main.nome.Equals(nome))
+            {
+                return this.Cozinhar(main);
+            }
+            else
+            {
+                main = LerArquivos.GetProgramaByName(nome);
+                main.tempo = main.convertTimer(main.tempo);
+            }
             return this.Cozinhar(main);
+
         }
 
+        [HttpPost]
         public JsonResult InicioRapido()
         {
             Programa programa = new Programa
@@ -70,7 +96,7 @@ namespace Microondas.App.Controllers
                 nome = "Aquecimento Rápido",
                 tempo = "30",
                 potencia = "8",
-                caracter = "#"
+                caracter = "-"
             };
 
             this.Cozinhar(programa);
@@ -81,6 +107,18 @@ namespace Microondas.App.Controllers
             };
         }
 
+        [HttpPost]
+        public ActionResult IniciarProgramaPadrao(Programa programa)
+        {
+            //verifica se  é o mesmo programa
+            if (main.paused && main.nome != null && main.nome.Equals(programa.nome))
+            {
+                return this.Cozinhar(main);
+            }
+            //se não retorna um novo programa
+            return this.Cozinhar(programa);
+
+        }
 
         [HttpPost]
         public JsonResult Cozinhar(Programa programa)

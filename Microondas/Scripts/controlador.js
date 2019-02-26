@@ -14,7 +14,9 @@ function Iniciar() {
 
 }
 
-function iniciarProgramaCustomizado () {
+function iniciarProgramaCustomizado() {
+    if (started)
+        return;
     var programa = $("#cbPrograma option:selected").text();
     $.ajax({
         url: '/Home/IniciarPrograma',
@@ -28,8 +30,8 @@ function iniciarProgramaCustomizado () {
                 return;
             } else {
                 $("#cuidado").hide();
-                $(".txCaracter").html(data.result.caracter);
                 main = data.result;
+                started = true;
                 iniciarCronometro(getTime(data.result.tempo));
                 aquecendo();
             }
@@ -41,22 +43,28 @@ function iniciarProgramaCustomizado () {
 }
 
 function iniciarProgramaPadrao() {
-    var programa;
-    if (!main) {
-        var tempo = getTime($(".txtTempo").val());
-        var potencia = $(".txtPotencia").val();
-        var caracter = $(".txCaracter").html().charAt(0);
+    if (started)
+        return;
 
+
+    var programa;
+    var tempo = getTime($(".txtTempo").val());
+    var potencia = $(".txtPotencia").val();
+    var caracter = $(".txCaracter").html().charAt(0);
+
+    if (main && main.nome === "Aquecimento Rápido") {
+        programa = main;
+    } else {
         programa = {
+            nome: "ProgramaPadrao",
             tempo: tempo,
             potencia: potencia,
             caracter: caracter
         };
-    } else
-        programa = main;
+    }
 
     $.ajax({
-        url: '/Home/Cozinhar',
+        url: '/Home/IniciarProgramaPadrao',
         type: 'Post',
         data: programa,
         success: function (data) {
@@ -65,8 +73,8 @@ function iniciarProgramaPadrao() {
                 return;
             } else {
                 $("#cuidado").hide();
-                $(".txCaracter").html(data.result.caracter);
                 main = data.result;
+                started = true;
                 iniciarCronometro(getTime(data.result.tempo));
                 aquecendo();
             }
@@ -77,8 +85,9 @@ function iniciarProgramaPadrao() {
     });
 }
 
-
 function AquecimentoRapido() {
+    if (started)
+        return;
     $.ajax({
         url: '/Home/InicioRapido',
         type: 'Post',
@@ -90,6 +99,7 @@ function AquecimentoRapido() {
                 $("#cuidado").hide();
                 $(".txCaracter").html(data.result.caracter);
                 main = data.result;
+                started = true;
                 iniciarCronometro(getTime(data.result.tempo));
                 aquecendo();
             }
@@ -113,7 +123,6 @@ function Parar() {
                 tempoPausado = 0;
                 $(".txCaracter").html(main.caracter);
                 $(".tempo").html("00:00");
-                reset();
                 clearTimeout(timeOut);
                 clearTimeout(timeOutAquecendo);
             }
@@ -179,11 +188,7 @@ function iniciarCronometro(tempo) {
 function menuEscolha() {
     var value = +($("#tipoPrograma").val());
     if (value === 0) {
-        $(".txtTempo").prop('disabled', false);
-        $(".txtPotencia").prop('disabled', false);
-        $(".txtTempo").val("02:00");
-        $(".txtPotencia").val("10");
-        $(".personalizado").hide();
+        resetInfo();
     }
     else {
         $(".txtTempo").prop('disabled', true);
@@ -191,15 +196,18 @@ function menuEscolha() {
         $(".personalizado").show();
         menuPrograma();
     }
+    Pausar();
 }
 
-function reset() {
-    $("#tipoPrograma").val(0);
+function resetInfo() {
+    if (main)
+        main.nome = "";
     $(".txtTempo").prop('disabled', false);
     $(".txtPotencia").prop('disabled', false);
     $(".txtTempo").val("02:00");
     $(".txtPotencia").val("10");
     $(".personalizado").hide();
+    $(".txCaracter").html("#");
 }
 
 function menuPrograma() {
@@ -212,10 +220,10 @@ function menuPrograma() {
         },
         success: function (result) {
             if (result) {
-                $(".txtTempo").val(result.Tempo);
-                $(".txtPotencia").val(result.Potencia);
-                $(".txInstrucao").html(result.Instrucao);
-                $(".txCaracter").html(result.Caracter);
+                $(".txtTempo").val(result.tempo);
+                $(".txtPotencia").val(result.potencia);
+                $(".txInstrucao").html(result.instrucao);
+                $(".txCaracter").html(result.caracter);
             }
         },
         error: function () {

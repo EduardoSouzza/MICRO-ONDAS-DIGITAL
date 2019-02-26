@@ -135,7 +135,6 @@
     <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\LerArquivos.cs" />
     <Compile Include="Models\Programa.cs" />
-    <Compile Include="Models\ProgramaMicroondas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,3 +4,5 @@ Pipoca|01:30|5|,|Verifique na embalagem o lado certo.
 Macarrão|01:45|6|;|Cozinhe o macarrão com muita água, mas ao final tome cuidado.
 Arroz|01:20|5|!|Cozinhe o arroz e ao terminar deixe descançar por 5 minutos
 Descongelar|01:00|10|!|Utilize essa opção para descongelar legumes/carnes
+Bolo de caneca|02:00|10|-|teste
+teste|02:00|10|)|teste

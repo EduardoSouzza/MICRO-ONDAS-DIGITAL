@@ -9,11 +9,11 @@ namespace Microondas.App.Models
 {
     public static class LerArquivos
     {
-        public static List<ProgramaMicroondas> ListarProgramas
+        public static List<Programa> ListarProgramas
         {
             get
             {
-                var Linhas = new List<ProgramaMicroondas>();
+                var Linhas = new List<Programa>();
 
                 var enderecoDoArquivo = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "configuracao.txt");
                 using (var fluxoDoArquivo = new FileStream(enderecoDoArquivo, FileMode.Open))
@@ -22,8 +22,11 @@ namespace Microondas.App.Models
                     while (!leitor.EndOfStream)
                     {
                         var linha = leitor.ReadLine();
-                        var programaMicroondas = FormatLine(linha);
-                        Linhas.Add(programaMicroondas);
+                        if (linha != "")
+                        {
+                            var linhaFormatada = FormatLine(linha);
+                            Linhas.Add(linhaFormatada);
+                        }
                     }
                 }
 
@@ -33,27 +36,26 @@ namespace Microondas.App.Models
 
         public static Programa GetProgramaByName(String nome)
         {
-            var data = ListarProgramas.FirstOrDefault(programa => programa.Nome.Equals(nome));
-            return new Programa()
-            {
-                nome = data.Nome,
-                instrucao = data.Instrucao,
-                caracter = data.Caracter,
-                potencia = data.Potencia.ToString(),
-                tempo = data.Tempo
-            };
+            return ListarProgramas.FirstOrDefault(programa => programa.nome.Equals(nome));
         }
 
-        static ProgramaMicroondas FormatLine(string linha)
+        static Programa FormatLine(string linha)
         {
             var campos = linha.Split('|');
             var nome = campos[0];
             var tempo = campos[1];
-            var potencia = int.Parse(campos[2]);
+            var potencia = campos[2];
             var caracter = campos[3];
             var instrucao = campos[4];
 
-            return new ProgramaMicroondas(nome, tempo, potencia, caracter, instrucao); ;
+            return new Programa()
+            {
+                nome = nome,
+                tempo = tempo,
+                potencia = potencia,
+                caracter = caracter,
+                instrucao = instrucao
+            };
         }
     }
 }
